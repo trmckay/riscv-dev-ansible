@@ -4,9 +4,9 @@ set -e
 savedir=$(pwd)
 
 if command -v apt-get > /dev/null; then
-    apt-get install ansible
+    sudo apt-get install ansible
 elif command -v dnf > /dev/null; then
-    dnf install ansible
+    sudo dnf install ansible
 fi
 
 tmp=$(mktemp -d)
