@@ -1,0 +1,45 @@
+- name: Load OS-specific variables
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - default.yaml
+      paths:
+        - vars
+
+- name: Install dependencies
+  package:
+    name: "{{ deps }}"
+    state: latest
+
+- name: Clone toolchain
+  git:
+    repo: "{{ toolchain_repo }}"
+    dest: "{{ toolchain_dir }}"
+    version: master
+
+- name: Configure automake
+  command: "./configure --prefix={{ install_dir }} --with-arch={{ arch }}"
+  args:
+    chdir: "{{ toolchain_dir }}"
+    creates: "{{ toolchain_dir }}/Makefile"
+
+- name: Compile toolchain
+  become: yes
+  command: "make -j$(nproc)"
+  args:
+    chdir: "{{ toolchain_dir }}"
+    creates: /opt/riscv/bin
+
+- name: Add toolchain to path
+  copy:
+    dest: /etc/profile.d/riscv-dev-path.sh
+    content: "PATH=$PATH:{{ install_dir }}/bin"
+
+- name: Cleanup source files
+  become: yes
+  file:
+    state: absent
+    path: "{{ toolchain_dir }}"

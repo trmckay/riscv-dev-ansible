@@ -1,0 +1,8 @@
+---
+
+toolchain_repo: https://github.com/riscv-collab/riscv-gnu-toolchain
+toolchain_dir: /tmp/riscv-gnu-toolchain
+install_dir: /opt/riscv
+
+arch: rv64gc
+enable_multilib: no
