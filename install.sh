@@ -15,7 +15,12 @@ cd "$tmp"
 git clone https://github.com/trmckay/riscv-dev-ansible
 cd riscv-dev-ansible
 
-ansible-playbook -K --connection=localhost riscv-dev.yml || echo -e "\nInstall failed!"
+root_pass="$(read -s -p 'Enter password for sudo: ')"
+
+ansible-playbook \
+    --extra-vars "ansible_sudo_pass=$root_pass" \
+    --connection=localhost riscv-dev.yml || \
+    echo -e "\nInstall failed!"
 
 rm -rf "$tmp"
 cd "$savedir"
