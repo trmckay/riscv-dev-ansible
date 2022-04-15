@@ -13,7 +13,7 @@ fi
 tmp=$(mktemp -d)
 cd "$tmp"
 
-git clone https://github.com/trmckay/riscv-dev-ansible
+git clone https://git.trmckay.com/tm/riscv-dev-ansible
 cd riscv-dev-ansible
 
 root_pass="$(read -s -p 'Enter password for sudo: ')"

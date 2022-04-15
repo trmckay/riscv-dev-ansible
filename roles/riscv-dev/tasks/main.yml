@@ -10,6 +10,7 @@
         - vars
 
 - name: Install dependencies
+  become: yes
   package:
     name: "{{ deps }}"
     state: latest
