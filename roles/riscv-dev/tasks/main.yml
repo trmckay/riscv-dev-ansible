@@ -29,12 +29,13 @@
 
 - name: Compile toolchain
   become: yes
-  command: "make -j$(nproc)"
+  shell: "make -j$(nproc)"
   args:
     chdir: "{{ toolchain_dir }}"
     creates: /opt/riscv/bin
 
 - name: Add toolchain to path
+  become: yes
   copy:
     dest: /etc/profile.d/riscv-dev-path.sh
     content: "PATH=$PATH:{{ install_dir }}/bin"
