@@ -1,3 +1,3 @@
 ```
-curl https://git.trmckay.com/tm/riscv-dev-ansible/raw/branch/main/install.sh | bash
+curl https://raw.githubusercontent.com/trmckay/riscv-dev-ansible/main/install.sh | bash
 ```
